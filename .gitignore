@@ -1,0 +1,6 @@
+pre.docx
+include/
+Lib/
+Scripts/
+.idea/
+__pycache__/
