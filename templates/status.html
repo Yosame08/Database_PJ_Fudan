@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>锣鼓 - 状态</title>
+    <style>
+		/* Add CSS styles for the banner and hyperlinks here */
+		#banner {
+		  background-color: #227670;
+		  padding: 0px;
+		  display: block;
+		  position: fixed;
+		  top: 0;
+		  bottom: 0;
+		  width: 80px;
+		  height: 100%;
+		}
+		#banner ul {
+		  list-style: none;
+		  margin: 0;
+		  padding: 0;
+		  display: block;
+		}
+		#banner li {
+		  display: block;
+		  align-items: center;
+		  padding: 0px;
+		}
+		
+		/* Add a hover effect to the list items */
+		#banner li:hover {
+			background-color: #142826;
+		}
+		#banner li:hover a {
+			color: white;
+		}
+		
+		/* Add styles for the buttons */
+		#banner li a {
+			display: block;
+			padding: 10px;
+			border-radius: 5px;
+			text-decoration: none;
+			color: white;
+			text-align: center;
+		}
+		/* Add a hover effect to the buttons */
+		#banner li a:hover {
+			background-color: #142826;
+			color: white;
+		}
+		#banner li a img {
+			width: 27px;
+			height: 27px;
+			margin-right: 0px;
+			vertical-align: middle;
+		}
+		#banner img {
+			width: 80px;
+			height: 80px;
+			margin-right: 100px;
+			vertical-align: middle;
+		}
+		
+		/* Remove default margin around body element */
+		body {
+		  margin: 0;
+		  position: relative;
+		  min-height: 100vh;
+		  background-color: #f4f4f4;
+		}
+		main {
+		  margin-left: 140px;
+		  margin-right: 90px;
+		}
+	</style>
+	<style>
+		#profban {
+		  background-color: #d7f3f1;
+		  display: flex;
+		  justify-content: space-between;
+		  width: calc(100% - 280px);
+		  height: 82px;
+		  margin-left: 80px;
+		  padding-left: 20px;
+		  padding-right: 180px;
+		  align-items: center;
+		}
+		#profban ul {
+		  list-style: none;
+		  margin: 0;
+		  padding: 0;
+		  display: flex;
+		}
+		#profban li {
+		  padding: 30px;
+		}
+		#profban a {
+			text-decoration: none;
+			color: inherit;
+		}
+		#profban li:hover {
+			background-color: #b0e8e4;
+		}
+		#profban li:hover a {
+			color: inherit;
+		}
+		.title_pic{
+			width: 210px;
+			height: 70px;
+		}
+	</style>
+	<style>
+		#footer {
+		  background-color: #111f2c;
+		  color: white;
+		  display: block;
+		  width: calc(100% - 80px);
+		  left: 80px;
+		  position: absolute;
+		  text-align: center;
+		  bottom: 0;
+		}
+		#footer img{
+			width: 64px;
+			height: 64px;
+			padding: 5px 0 0 0;
+		}
+		#footer p{
+			margin: 0;
+			font-size: 14px;
+		}
+	</style>
+	<style>
+		.filter-container{
+			display: flex;
+			justify-content: left; /* Center the elements horizontally */
+			align-items: center; /* Center the elements vertically */
+			margin-top: 20px;
+			margin-left: 5%;
+		}
+		.input-container {
+			position: relative;
+			display: inline-block;
+			margin-right: 10px; /* add margin to separate input boxes */
+		}
+		.custom-select-container {
+			position: relative;
+			display: inline-block;
+		}
+		.input-container img {
+			position: absolute;
+			left: 5px;
+			top: 50%;
+			transform: translateY(-50%);
+			height: 20px;
+		}
+		.input-container input[type="text"] {
+			height: 30px;
+			padding-left: 30px;
+			border-radius: 2px;
+			border: 1px solid #ccc;
+		}
+		.custom-select {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			background-color: white;
+			height: 32px;
+			width: 300px;
+		}
+		.custom-select .select-selected {
+			position: relative;
+			height: 32px;
+			padding-left: 5px;
+			border: 1px solid #ccc;
+			border-radius: 2px 2px 2px 2px;
+			cursor: pointer;
+			font-size: 14px;
+			color: gray;
+		}
+		.custom-select .select-selected img{
+			position: relative;
+			height: 30px;
+			padding-left: 5px;
+			cursor: pointer;
+			padding-top: 6px;
+		}
+		.custom-select .selected-text {
+			display: inline-block;
+			vertical-align: super;
+			padding-left: 0;
+			font-size: 14px;
+		}
+		.custom-select .arrow {
+			position: absolute;
+			top: 50%;
+			right: 10px;
+			transform: translateY(-50%) scale(1.2); /* Adjust scale value to make the arrow smaller */
+			width: 0;
+			height: 0;
+			border-style: solid;
+			border-width: 4px 4px 0 4px; /* Adjust the border-width as needed */
+			border-color: #999 transparent transparent transparent;
+			pointer-events: none;
+		}
+		.custom-select .select-items {
+			display: none;
+			position: absolute;
+			top: 100%;
+			left: 0;
+			right: 0;
+			padding: 5px 0;
+			background-color: white;
+			border: 1px solid #ccc;
+			max-height: 150px;
+			overflow-y: auto;
+		}
+		.custom-select .select-items li {
+			padding: 5px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+		}
+		.custom-select .select-items li img {
+			width: 20px;
+			height: 20px;
+			margin-right: 10px;
+		}
+		.custom-select .select-selected img {
+			width: 20px;
+			height: 20px;
+			margin-right: 10px;
+		}
+		.custom-select .select-items li:hover {
+			background-color: #f4f4f4;
+		}
+		.filter-container button {
+			background-color: #33b1a8;
+			color: white;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			/* margin-top: 10px; Add margin to separate from the filter container */
+			margin-left: 310px; /* Align the button to the right */
+			margin-top: 1px;
+			width: 32px;
+			height: 32px;
+		}
+		.filter-container button img{
+			width: 16px;
+			height: 16px;
+			margin-top: 2px;
+		}
+
+
+		.table_container{
+			margin-top: 12px;
+			display: flex;
+			justify-content: center;
+		}
+
+		table {
+		  border-collapse: collapse;
+		  width: 90%;
+		}
+		table th {
+		  border-bottom: 2px solid black;
+		  height: 40px;
+		  padding: 4px;
+		}
+		table td {
+		  border-bottom: 1px solid gray;
+		  height: 32px;
+		}
+
+		table th:nth-child(1),
+		table td:nth-child(1) {
+			text-align: left;
+			width: 9%;
+		}
+        table th:nth-child(2),
+		table td:nth-child(2) {
+			text-align: left;
+			width: 7%;
+		}
+		table th:nth-child(3),
+		table td:nth-child(3) {
+			text-align: left;
+			width: 20%;
+		}
+		table th:nth-child(4),
+		table td:nth-child(4) {
+			text-align: center;
+			width: 16%;
+		}
+		table th:nth-child(5),
+		table td:nth-child(5) {
+			text-align: center;
+			width: 8%;
+		}
+		table th:nth-child(6),
+		table td:nth-child(6) {
+			text-align: center;
+			width: 8%;
+		}
+		table th:nth-child(7),
+		table td:nth-child(7) {
+			text-align: center;
+			width: 8%;
+		}
+		table th:nth-child(8),
+		table td:nth-child(8) {
+			text-align: center;
+			width: 9%;
+		}
+		table th:nth-child(9),
+		table td:nth-child(9) {
+			text-align: center;
+			width: 15%;
+		}
+        .profimg{
+            width: 60px;
+            height: 60px;
+        }
+        .table_container table td a {
+            color: blue;
+        }
+        .table_container table td a:visited {
+            color: blue;
+        }
+	</style>
+  </head>
+  <body>
+	<header>
+      <nav id="profban">
+	    <img class="title_pic" src="/static/luogu.png" alt="Image">
+        <!-- Add the "Log in" and "Sign up" links to another unordered list -->
+		<ul>
+            {% if userid %}
+                <li><a href="{{ url_for('profile') }}">{{ username }}</a></li>
+                <li><a href="{{ url_for('logout') }}">退出</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">登录</a></li>
+                <li><a href="{{ url_for('signup') }}">注册</a></li>
+            {% endif %}
+		</ul>
+        {% if userid %}
+            <img src="/static/user.png" alt="Image" class="profimg">
+        {% else %}
+            <img src="/static/visitor.png" alt="Image" class="profimg">
+        {% endif %}
+      </nav>
+    </header>
+	
+    <main>
+		<div class="filter-container">
+			<div class="input-container">
+				<img src="/static/icon.png" alt="Icon">
+				<input type="text" id="title-number" name="title-number" placeholder="Title Number">
+			</div>
+			<div class="input-container">
+				<img src="/static/icon.png" alt="Icon">
+				<input type="text" id="user-name" name="user-name" placeholder="User Name">
+			</div>
+			<div class="custom-select-container">
+				<div class="custom-select">
+				<div class="select-selected">
+					<img src="/static/icon-unlimited.png" alt="Unlimited Icon" class>
+					<span class="selected-text">Unlimited</span>
+					<span class="arrow"></span>
+				</div>
+				<ul class="select-items">
+					<li data-value="unlimited">
+					<img src="/static/icon-unlimited.png" alt="Unlimited Icon">
+					Unlimited
+					</li>
+					<li data-value="accepted">
+					<img src="/static/icon-accepted.png" alt="Accepted Icon">
+					Accepted
+					</li>
+					<li data-value="compile-error">
+					<img src="/static/icon-compile-error.png" alt="Compile Error Icon">
+					Compile Error
+					</li>
+					<li data-value="runtime-error">
+					<img src="/static/icon-runtime-error.png" alt="Runtime Error Icon">
+					Runtime Error
+					</li>
+					<li data-value="tle">
+					<img src="/static/icon-tle.png" alt="TLE Icon">
+					TLE
+					</li>
+					<li data-value="mle">
+					<img src="/static/icon-mle.png" alt="MLE Icon">
+					MLE
+					</li>
+				</ul>
+				</div>
+			</div>
+			<button><img src="/static/magnifying.png"></button>
+		</div>
+		<script>
+			// Handle custom dropdown functionality
+			const customSelect = document.querySelector('.custom-select');
+			const selectSelected = customSelect.querySelector('.select-selected');
+			const selectItems = customSelect.querySelector('.select-items');
+			const arrow = customSelect.querySelector('.arrow');
+
+			selectSelected.addEventListener('click', function() {
+			selectItems.style.display = 'block';
+			});
+
+			selectItems.addEventListener('click', function(e) {
+			if (e.target.tagName === 'LI') {
+				const value = e.target.getAttribute('data-value');
+				const textContent = e.target.textContent.trim();
+				const iconHTML = e.target.querySelector('img').outerHTML;
+				const iconClass = e.target.querySelector('img').className;
+				
+				selectSelected.innerHTML = iconHTML + '<span class="selected-text">' + textContent + '</span>' + arrow.outerHTML;
+				selectSelected.querySelector('img').className = iconClass;
+				selectItems.style.display = 'none';
+				
+				// Perform any additional actions based on the selected value
+				console.log('Selected value:', value);
+			}
+			});
+
+			document.addEventListener('click', function(e) {
+			if (!customSelect.contains(e.target)) {
+				selectItems.style.display = 'none';
+			}
+			});
+		</script>
+	  <div class="table_container">
+		<table>
+			<tr>
+			  <th>用户</th>
+              <th>题目编号</th>
+			  <th>题目名称</th>
+			  <th>结果</th>
+			  <th>分数</th>
+			  <th>用时/ms</th>
+			  <th>内存/MB</th>
+			  <th>代码长度/B</th>
+			  <th>日期</th>
+			</tr>
+            {% for item in result %}
+                {% set outer_loop = loop %}
+                <tr>
+                    {% for subitem in item %}
+                        {% if loop.index == 3 %}
+                            <td><a href="{{ url_for('question', id=outer_loop.index) }}">{{ subitem }}</a></td>
+                        {% else %}
+                            <td>{{ subitem }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+		  </table>
+	  </div>
+
+    </main>
+
+    <footer>
+	  <nav id="footer">
+		<!-- Add lines of text here -->
+		<img src="/static/QRcode.png" alt="Image">
+		<p>Made by Yosame<br>For Database PJ</p>
+		<!-- Add more lines as needed -->
+      </nav>
+    </footer>
+	
+	<header>
+      <nav id="banner">
+        <!-- Add the rest of the hyperlinks to a separate unordered list -->
+		<img src="/static/drum_non_transparent.png" alt="Image">
+        <ul>
+			<li><a href="{{ url_for('index') }}"><img src="/static/home.png" alt="home"><br>主页</a></li>
+			<li><a href="{{ url_for('question') }}"><img src="/static/book.png" alt="book"><br>题库</a></li>
+			<li><a href="{{ url_for('status') }}"><img src="/static/status.png" alt="status"><br>状态</a></li>
+        </ul>
+      </nav>
+    </header>
+  </body>
+</html>
+

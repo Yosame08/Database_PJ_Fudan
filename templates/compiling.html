@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>锣鼓 - 编译中</title>
+    <style>
+		/* Add CSS styles for the banner and hyperlinks here */
+		#banner {
+		  background-color: #227670;
+		  padding: 0px;
+		  display: block;
+		  position: fixed;
+		  top: 0;
+		  bottom: 0;
+		  width: 80px;
+		  height: 100%;
+		}
+		#banner ul {
+		  list-style: none;
+		  margin: 0;
+		  padding: 0;
+		  display: block;
+		}
+		#banner li {
+		  display: block;
+		  align-items: center;
+		  padding: 0px;
+		}
+		
+		/* Add a hover effect to the list items */
+		#banner li:hover {
+			background-color: #142826;
+		}
+		#banner li:hover a {
+			color: white;
+		}
+		
+		/* Add styles for the buttons */
+		#banner li a {
+			display: block;
+			padding: 10px;
+			border-radius: 5px;
+			text-decoration: none;
+			color: white;
+			text-align: center;
+		}
+		/* Add a hover effect to the buttons */
+		#banner li a:hover {
+			background-color: #142826;
+			color: white;
+		}
+		#banner li a img {
+			width: 27px;
+			height: 27px;
+			margin-right: 0px;
+			vertical-align: middle;
+		}
+		#banner img {
+			width: 80px;
+			height: 80px;
+			margin-right: 100px;
+			vertical-align: middle;
+		}
+		
+		/* Remove default margin around body element */
+		body {
+		  margin: 0;
+		  position: relative;
+		  min-height: 100vh;
+		  background-color: #f4f4f4;
+          background-image: url("/static/MikuOnly_cut.png");
+          background-repeat: no-repeat;
+          background-size: cover;
+		}
+		main {
+		  margin-left: 140px;
+		  margin-right: 90px;
+		}
+	</style>
+	<style>
+		#profban {
+		  background-color: #d7f3f1;
+		  display: flex;
+		  justify-content: space-between;
+		  width: calc(100% - 280px);
+		  height: 82px;
+		  margin-left: 80px;
+		  padding-left: 20px;
+		  padding-right: 180px;
+		  align-items: center;
+		}
+		#profban ul {
+		  list-style: none;
+		  margin: 0;
+		  padding: 0;
+		  display: flex;
+		}
+		#profban li {
+		  padding: 30px;
+		}
+		#profban a {
+			text-decoration: none;
+			color: inherit;
+		}
+		#profban li:hover {
+			background-color: #b0e8e4;
+		}
+		#profban li:hover a {
+			color: inherit;
+		}
+		.title_pic{
+			width: 210px;
+			height: 70px;
+		}
+	</style>
+	<style>
+		#footer {
+			background-color: #111f2c;
+			color: white;
+			display: block;
+			width: calc(100% - 80px);
+			left: 80px;
+			position: fixed;
+			position: absolute;
+			text-align: center;
+			bottom: 0;
+		}
+		#footer img{
+			width: 64px;
+			height: 64px;
+			padding: 5px 0 0 0;
+		}
+		#footer p{
+			margin: 0;
+			font-size: 14px;
+		}
+	</style>
+	<style>
+		.title {
+		  color: black;
+          align-items: center;
+		  font-weight: bold;
+		  padding: 30px 20px 0px 25px;
+		  margin: -10px -10px 10px -10px;
+		}
+        .title .limit{
+            text-align: center;
+        }
+        .title .head{
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .info{
+          border: 1px solid #ddd;
+		  border-radius: 10px;
+		  overflow: hidden;
+          background: white;
+          margin: 10px;
+          padding-left: 20px;
+        }
+        .profimg{
+            width: 60px;
+            height: 60px;
+        }
+	</style>
+  </head>
+  <body>
+	<header>
+        <nav id="profban">
+            <img class="title_pic" src="/static/luogu.png" alt="Image">
+            <!-- Add the "Log in" and "Sign up" links to another unordered list -->
+            <ul>
+                {% if userid %}
+                    <li><a href="{{ url_for('profile') }}">{{ username }}</a></li>
+                    <li><a href="{{ url_for('logout') }}">退出</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">登录</a></li>
+                    <li><a href="{{ url_for('signup') }}">注册</a></li>
+                {% endif %}
+            </ul>
+            {% if userid %}
+                <img src="/static/user.png" alt="Image" class="profimg">
+            {% else %}
+                <img src="/static/visitor.png" alt="Image" class="profimg">
+            {% endif %}
+        </nav>
+	</header>
+	<script src="/static/jquery-3.6.0.min.js"></script>
+	<main>
+        <div class="title">
+            <div class="head">
+                {{ title }}
+            </div>
+            <div class="limit">
+                {{ limit }}
+            </div>
+        </div>
+        <div class="info">
+            <h1>编译中...</h1>
+            <p class="error-message"></p>
+        </div>
+        <script>
+            // Compile the code
+            fetch('/compile_code?problem_id={{ problem_id }}')
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        // Compilation succeeded
+                        window.location.href = '/run?problem_id={{ problem_id }}';
+                    } else {
+                        // Compilation failed
+                        let error_message = result.error_message;
+                        document.querySelector('.info h1').innerHTML = '编译错误';
+                        document.querySelector('.error-message').innerHTML = error_message;
+                    }
+                });
+        </script>
+	</main>
+	<footer>
+	<nav id="footer">
+		<!-- Add lines of text here -->
+		<img src="/static/QRcode.png" alt="Image">
+		<p>Made by Yosame<br>For Database PJ</p>
+		<!-- Add more lines as needed -->
+	</nav>
+	</footer>
+	
+	<header>
+	<nav id="banner">
+		<!-- Add the rest of the hyperlinks to a separate unordered list -->
+		<img src="/static/drum_non_transparent.png" alt="Image">
+		<ul>
+			<li><a href="{{ url_for('index') }}"><img src="/static/home.png" alt="home"><br>主页</a></li>
+			<li><a href="{{ url_for('question') }}"><img src="/static/book.png" alt="book"><br>题库</a></li>
+			<li><a href="{{ url_for('status') }}"><img src="/static/status.png" alt="status"><br>状态</a></li>
+		</ul>
+	</nav>
+	</header>
+  </body>
+</html>
+
